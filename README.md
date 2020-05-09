@@ -1,9 +1,11 @@
-### Use simulated anneal to solve TSP problem
+## Use simulated anneal to solve TSP problem
+
 ### Require
  * python>=3.5
  * numpy
  * matplotlib
- ###Useage
+ 
+ ### Useage
   To run the code, simply excute:  
   `python main.py`  
   The best path will be saved in city.txt. you can use test.exe to verify the solution.  
