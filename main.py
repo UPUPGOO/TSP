@@ -19,24 +19,29 @@ parser.add_argument('--mode', type=str, default='reverse',
 parser.add_argument('--anneal_mode', type=int, default=0, help='anneal mode. It must be one of [0,1,2](default:0)')
 ars = parser.parse_args()
 
-np.random.seed(ars.seed)
-data = np.loadtxt(ars.file_path, delimiter=',', usecols=[1, 2])
+np.random.seed(ars.seed)  # set random seed for reproducing experiment results
+data = np.loadtxt(ars.file_path, delimiter=',', usecols=[1, 2])  # load data
+# init algorithm
 sa = SA(data, T=ars.init_T, anneal_rate=ars.anneal_rate, final_T=ars.final_T, inner_iters=ars.inner_iters, random_init=ars.random_init)
+# run algorithm
 log = sa.train(mode=ars.mode, anneal_mode=ars.anneal_mode)
+# log information
 t = log['time']
 dis = log['dis']
 path = log['path']
 dis_lst = deepcopy(sa.dis_lst)
 print('time:{:.3f}\tbest distance:{}'.format(t, dis))
 print('Now you can use test.exe to verify solution.')
+# save best result. So you can excute test.exe to verify the solution
 np.savetxt('city.txt', path + 1, fmt='%d', newline=',')
+# plot distance over time
 fig = plt.figure()
 ax = fig.add_subplot(211)
 ax.plot(dis_lst)
 ax.set_xlabel('num')
 ax.set_ylabel('distance')
 ax.set_title('best distance:' + str(dis))
-
+# plot best path. It is similar to the result of running test.exe
 ax = fig.add_subplot(212, aspect='equal')
 ax.plot(data[:, 0], data[:, 1], 'x', color='blue')
 for i, loc in enumerate(data):

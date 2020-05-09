@@ -34,6 +34,7 @@ class SA:
         self.best_path, self.best_dis = self._path, self._dis
         self.dis_lst = [self._dis]
 
+    # get initial solution
     def init_path(self, random_path=False):
         self._path = np.arange(self.n)
         if random_path:
@@ -41,7 +42,7 @@ class SA:
         self._dis = self.cal_path(self._path)
         return self._path
 
-    def step(self, mode='reverse', greedy=False):
+    def step(self, mode='reverse', greedy=False):  # if greedy is True, the algorithm become Hill Climbing
         self._cnt += 1
         if mode == 'cross':
             new_path = self.cross(self._path.copy())
@@ -52,10 +53,10 @@ class SA:
 
         new_dis = self.cal_path(new_path)
         delta_dis = new_dis - self._dis
-        if new_dis < self.best_dis:
+        if new_dis < self.best_dis:  # save the best solution
             self.best_path = new_path
             self.best_dis = new_dis
-        if delta_dis < 0 or (not greedy and np.random.random() < self.p(delta_dis)):
+        if delta_dis < 0 or (not greedy and np.random.random() < self.p(delta_dis)):  # Metropolis method
             self._path = new_path
             self._dis = new_dis
             self.dis_lst.append(self._dis)
@@ -73,7 +74,7 @@ class SA:
                 if not self.step(mode, greedy):
                     self._invalid_cnt += 1
                     if self._invalid_cnt > min(int(iters * 0.5), 100):
-                        break
+                        break  # early stop program to save time. It is very useful.
             t1 = time()
             if verb:
                 print('Epi{}, Time {:.2f}, current best distance {}'.format(len(time_lst), t1 - t0, self.best_dis))
@@ -95,6 +96,7 @@ class SA:
                 'time': np.sum(time_lst)
                 }
 
+    # 2-opt. please reference to https://baike.baidu.com/item/2-opt/7766797?fr=aladdin
     def reverse(self, path):
         i, j = np.random.choice(range(1, self.n), 2)
         if i < j:
@@ -103,14 +105,17 @@ class SA:
             path[j:i + 1] = path[i:j - 1:-1]
         return path
 
+    # simply exchange the random position of path to get new solution
     def cross(self, path):
         i, j = np.random.choice(range(1, self.n), 2)
         path[i], path[j] = path[j], path[i]
         return path
 
+    # use Jaccard coefficient to compute the difference of two different path.
     def _compare_path(self, p1, p2):
         return np.sum(p1 == p2) / len(p1)
 
+    # use Jaccard coefficient to compute the difference of two different path.
     def compare_path(self, p1, p2=None):
         if len(p1.shape) > 1 and p2 is None:
             return np.array([self._compare_path(m, n) for m in p1 for n in p1]).reshape(-1, p1.shape[0])
@@ -127,19 +132,23 @@ class SA:
         else:
             raise ValueError
 
+    # calculation distance of path
     def cal_path(self, path):
         dist = self.dist[path[-1], path[0]]
         for i in range(len(path) - 1):
             dist += self.dist[path[i], path[i + 1]]
         return dist
 
+    # pre-compute distance of two city
     def get_distance_dist(self, data):
         return np.array([np.linalg.norm(m - n) for m in data for n in data]).round().astype(np.int).reshape(-1, len(data))
 
+    # probalitity of moving to next state
     def p(self, delta):
         p = math.exp(-delta / self.temp)
         return p
 
+    # plot distance over time
     def plot_dis(self, **kwargs):
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -152,6 +161,7 @@ class SA:
         ax.set_title(title)
         plt.show()
 
+    # plot path
     def plot_path(self, bestPath):
         ax = plt.subplot(111, aspect='equal')
         ax.plot(self.data[:, 0], self.data[:, 1], 'x', color='blue')
