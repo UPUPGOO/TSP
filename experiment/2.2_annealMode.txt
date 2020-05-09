@@ -1,0 +1,3 @@
+anneal mode=0	time=2.678	distance=726.2
+anneal mode=1	time=0.097	distance=1721.8
+anneal mode=2	time=0.046	distance=2245.2

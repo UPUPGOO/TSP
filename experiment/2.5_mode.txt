@@ -1,0 +1,2 @@
+mode=cross	time=2.585	distance=1051.7
+mode=reverse	time=2.965	distance=720.4

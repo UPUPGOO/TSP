@@ -1,0 +1,5 @@
+L=10	time=0.267	distance=1167.6
+L=50	time=1.296	distance=802.2
+L=100	time=2.313	distance=747.4
+L=150	time=3.935	distance=719.2
+L=200	time=5.316	distance=716.8

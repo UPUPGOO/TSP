@@ -1,0 +1,8 @@
+gamma=0.1	time=0.086	distance=1797.8
+gamma=0.3	time=0.149	distance=1419.0
+gamma=0.5	time=0.222	distance=1261.0
+gamma=0.8	time=0.628	distance=892.0
+gamma=0.9	time=1.285	distance=782.2
+gamma=0.95	time=2.882	distance=725.2
+gamma=0.98	time=7.566	distance=712.0
+gamma=0.99	time=15.251	distance=698.2

@@ -1,0 +1,8 @@
+T=10	time=1.744	distance=730.8
+T=30	time=2.059	distance=738.6
+T=50	time=2.231	distance=730.8
+T=100	time=2.473	distance=745.4
+T=150	time=2.598	distance=734.2
+T=200	time=2.767	distance=729.4
+T=240	time=2.808	distance=736.0
+T=300	time=2.774	distance=740.4
