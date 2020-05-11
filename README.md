@@ -25,4 +25,4 @@ python test_seed.py
 The experiment results will be saved in the directory *experiment*. 
 
 ### Report
-Because this is a task, there is also a detailed report. I will upload it soon.
+Because this is a task, there is a detailed report you can find.
